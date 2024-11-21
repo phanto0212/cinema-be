@@ -236,32 +236,28 @@
 			        <thead>
 			            <tr>
 			                <th scope="col">ID</th>
-			                <th scope="col">Cinema ID</th>
-			                <th scope="col">Screen Number</th>
-			                <th scope="col">Total Seats</th>
-			                <th scope="col">Actions</th>
-							<th scope="col">add_seat</th>
+			                <th scope="col">screen_id</th>
+			                <th scope="col">Seat Number</th>
+			                <th scope="col">seat_type</th>
+			                <th scope="col">status</th>
+							<th scope="col">actions</th>
 			            </tr>
 			        </thead>
 			        <tbody>
-			            <tr th:each="screen : ${screens}">
-			                <td th:text="${screen.id}" class="small-column"></td>
-			                <td th:text="${screen.cinema_id}" class="small-column"></td>
-			                <td th:text="${screen.screen_number}" class="medium-column"></td>
-			                <td th:text="${screen.total_seat}" class="medium-column"></td>
+			            <tr th:each="seat : ${seats}">
+			                <td th:text="${seat.id}" class="small-column"></td>
+			                <td th:text="${seat.screen_id}" class="small-column"></td>
+			                <td th:text="${seat.seat_number}" class="medium-column"></td>
+			                <td th:text="${seat.seat_type}" class="medium-column"></td>
+							<td th:text="${seat.status}" class="medium-column"></td>
 			                <td class="row-btn-action">
-			                    <form th:action="@{/edit/screen/{id}(id=${screen.id})}" method="post">
+			                    <form th:action="@{/edit/seat/{id}(id=${seat.id})}" method="post">
 			                        <button type="submit"  class="btn-size btn btn-primary btn-sm">Edit</button>
 			                    </form>
-			                    <form th:action="@{/delete/screen/{id}(id=${screen.id})}" method="post">
+			                    <form th:action="@{/delete/seat/{id}(id=${seat.id})}" method="post">
 			                        <button type="submit" class="btn-size btn btn-danger btn-sm">Delete</button>
 			                    </form>
 			                </td>
-							<td>
-								<form th:action="@{add/seat/{id}(id=${screen.id})}" method="post">
-									<button type="submit" class="btn-size btn btn-danger btn-sm">Add_Seat</button>
-							    </form>
-							</td>
 			            </tr>
 			        </tbody>
 			    </table>

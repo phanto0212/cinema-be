@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.phanvanto.cinema.Entity.Seat;
+import com.phanvanto.cinema.Filter.SeatDTO;
 import com.phanvanto.cinema.Repository.SeatRespository;
 @Service
 public class SeatServiceImpl implements SeatService{
@@ -15,13 +16,24 @@ public class SeatServiceImpl implements SeatService{
 	@Override
 	public List<Seat> getList() {
 		// TODO Auto-generated method stub
-		return null;
+		return seatRespository.getList();
 	}
 
 	@Override
 	public void AddorUpdate(Seat seat) {
-		// TODO Auto-generated method stub
+		seatRespository.AddorUpdate(seat);
 		
+	}
+
+	@Override
+	public void deleteSeatById(Long id) {
+		seatRespository.deleteSeatById(id);;
+		
+	}
+
+	@Override
+	public List<SeatDTO> getAllSeatByShowtimeId(Long showtime_id) {
+		return seatRespository.getAllSeatByShowtimeId(showtime_id);
 	}
 
 }

@@ -22,16 +22,20 @@ public class Showtime implements Serializable {
 	@Column(name = "cinema_id")
 	private Long cinema_id;
 	
+	@Column(name = "screen_id")
+	private Long screen_id;
+	
 	@Column(name = "movie_id")
 	private Long movie_id;
 	
 	@Column(name = "time_show")
 	private LocalTime time_show;
 
-	public Showtime(Long id, Long cinema_id, Long movie_id, LocalTime time_show) {
+	public Showtime(Long id, Long cinema_id, Long screen_id, Long movie_id, LocalTime time_show) {
 		super();
 		this.id = id;
 		this.cinema_id = cinema_id;
+		this.screen_id = screen_id;
 		this.movie_id = movie_id;
 		this.time_show = time_show;
 	}
@@ -57,6 +61,14 @@ public class Showtime implements Serializable {
 		this.cinema_id = cinema_id;
 	}
 
+	public Long getScreen_id() {
+		return screen_id;
+	}
+
+	public void setScreen_id(Long screen_id) {
+		this.screen_id = screen_id;
+	}
+
 	public Long getMovie_id() {
 		return movie_id;
 	}
@@ -76,7 +88,6 @@ public class Showtime implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
 
+	
 }

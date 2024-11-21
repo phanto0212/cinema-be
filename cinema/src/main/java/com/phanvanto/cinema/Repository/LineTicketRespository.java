@@ -1,9 +1,15 @@
 package com.phanvanto.cinema.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+
+
+import java.util.List;
 
 import com.phanvanto.cinema.Entity.Line_Ticket;
 
-public interface LineTicketRespository extends JpaRepository<Line_Ticket, Long>{
+public interface LineTicketRespository {
 
+	List<Line_Ticket> getList();
+	void AddorUpdate(Line_Ticket line_ticket);
+    void deleteById(Long id);
+    Line_Ticket getLineTicketByLine_id(Long id);
 }

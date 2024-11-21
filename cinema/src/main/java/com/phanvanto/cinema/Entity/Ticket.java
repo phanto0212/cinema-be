@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +23,9 @@ public class Ticket implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ticket_id;
     
+    @Column(name = "showtime_id")
+    private Long showtime_id;
+    
     @Column(name = "movie_id")
     private Long movie_id;
     
@@ -31,21 +36,25 @@ public class Ticket implements Serializable {
     private BigDecimal price;
     
     @Column(name = "purchase_time")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Timestamp purchase_time;
     
     @Column(name = "start_time")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Timestamp start_time;
     
     @Column(name = "end_time")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Timestamp end_time;
     
     @Column(name = "status")
     private String status;
 
-	public Ticket(Integer ticket_id, Long movie_id, int screen_id, BigDecimal price, Timestamp purchase_time,
-			Timestamp start_time, Timestamp end_time, String status) {
+	public Ticket(Integer ticket_id, Long showtime_id, Long movie_id, int screen_id, BigDecimal price,
+			Timestamp purchase_time, Timestamp start_time, Timestamp end_time, String status) {
 		super();
 		this.ticket_id = ticket_id;
+		this.showtime_id = showtime_id;
 		this.movie_id = movie_id;
 		this.screen_id = screen_id;
 		this.price = price;
@@ -66,6 +75,14 @@ public class Ticket implements Serializable {
 
 	public void setTicket_id(Integer ticket_id) {
 		this.ticket_id = ticket_id;
+	}
+
+	public Long getShowtime_id() {
+		return showtime_id;
+	}
+
+	public void setShowtime_id(Long showtime_id) {
+		this.showtime_id = showtime_id;
 	}
 
 	public Long getMovie_id() {
@@ -128,6 +145,5 @@ public class Ticket implements Serializable {
 		return serialVersionUID;
 	}
 
-	
 	
 }

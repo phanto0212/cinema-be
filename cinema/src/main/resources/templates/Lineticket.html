@@ -232,42 +232,69 @@
 			</nav>
       
 			<div class="container mt-4">
+				<div class="header-list">
+				        <h2>LineTicket List</h2>
+				        <button type="button" class="btn btn-secondary btn-sm btn-add-tour" data-bs-toggle="modal" data-bs-target="#addMovieModal">Add new LineTicket</button>
+				    </div>
 			    <table class="table table-striped table-hover table-bordered">
 			        <thead>
 			            <tr>
 			                <th scope="col">ID</th>
-			                <th scope="col">Cinema ID</th>
-			                <th scope="col">Screen Number</th>
-			                <th scope="col">Total Seats</th>
+			                <th scope="col">ticket_id</th>
+			                <th scope="col">seat_id</th>
+			                <th scope="col">price</th>
 			                <th scope="col">Actions</th>
-							<th scope="col">add_seat</th>
 			            </tr>
 			        </thead>
 			        <tbody>
-			            <tr th:each="screen : ${screens}">
-			                <td th:text="${screen.id}" class="small-column"></td>
-			                <td th:text="${screen.cinema_id}" class="small-column"></td>
-			                <td th:text="${screen.screen_number}" class="medium-column"></td>
-			                <td th:text="${screen.total_seat}" class="medium-column"></td>
+			            <tr th:each="lineticket : ${linetickets}">
+			                <td th:text="${lineticket.id}" class="small-column"></td>
+			                <td th:text="${lineticket.ticket_id}" class="small-column"></td>
+			                <td th:text="${lineticket.seat_id}" class="medium-column"></td>
+			                <td th:text="${lineticket.price}" class="medium-column"></td>
 			                <td class="row-btn-action">
-			                    <form th:action="@{/edit/screen/{id}(id=${screen.id})}" method="post">
+			                    <form th:action="@{/edit/lineticket/{id}(id=${lineticket.id})}" method="post">
 			                        <button type="submit"  class="btn-size btn btn-primary btn-sm">Edit</button>
 			                    </form>
-			                    <form th:action="@{/delete/screen/{id}(id=${screen.id})}" method="post">
+			                    <form th:action="@{/delete/lineticket/{id}(id=${lineticket.id})}" method="post">
 			                        <button type="submit" class="btn-size btn btn-danger btn-sm">Delete</button>
 			                    </form>
 			                </td>
-							<td>
-								<form th:action="@{add/seat/{id}(id=${screen.id})}" method="post">
-									<button type="submit" class="btn-size btn btn-danger btn-sm">Add_Seat</button>
-							    </form>
-							</td>
 			            </tr>
 			        </tbody>
 			    </table>
 			</div>
 
-	
+			<div class="modal fade" id="addMovieModal" tabindex="-1" aria-labelledby="addMovieModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="addMovieModalLabel">Add Movie</h5>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				      </div>
+				      <div class="modal-body">
+				        <form action="#" th:action="@{/addOrUpdateLineticket}" method="post">
+				          <div class="form-group mb-3">
+				            <label for="ticket_id">ticket_id</label>
+				            <input type="text" class="form-control" id="ticket_id" name="ticket_id" required>
+				          </div>
+				          <div class="form-group mb-3">
+				            <label for="seat_id">seat_id</label>
+				            <input type="text"  class="form-control" id="seat_id" name="seat_id" required>
+				          </div>
+						  <div class="form-group mb-3">
+						     <label for="price">price</label>
+						     <input type="number"  class="form-control" id="price" name="price" required>
+						  </div>
+				          <div class="modal-footer">
+				            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				            <button type="submit" class="btn btn-primary">Add</button>
+				          </div>
+				        </form>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 	
 	
 	

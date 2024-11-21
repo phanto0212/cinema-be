@@ -1,6 +1,7 @@
 package com.phanvanto.cinema.Entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,13 +28,17 @@ public class Combo implements Serializable {
 	
 	@Column(name = "avt_url")
 	private String avt_url;
+	
+	@Column(name = "price", nullable = false, precision = 10, scale = 2)
+	private BigDecimal price;
 
-	public Combo(Long id, String name, String description, String avt_url) {
+	public Combo(Long id, String name, String description, String avt_url, BigDecimal price) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.avt_url = avt_url;
+		this.price = price;
 	}
 
 	public Combo() {
@@ -73,9 +78,18 @@ public class Combo implements Serializable {
 		this.avt_url = avt_url;
 	}
 
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	
 
 }

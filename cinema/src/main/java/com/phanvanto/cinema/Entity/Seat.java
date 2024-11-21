@@ -27,13 +27,17 @@ public class Seat implements Serializable {
 	
 	@Column(name = "seat_type")
 	private String seat_type;
+	
+	@Column(name = "status")
+	private String status;
 
-	public Seat(Integer id, int screen_id, String seat_number, String seat_type) {
+	public Seat(Integer id, int screen_id, String seat_number, String seat_type, String status) {
 		super();
 		this.id = id;
 		this.screen_id = screen_id;
 		this.seat_number = seat_number;
 		this.seat_type = seat_type;
+		this.status = status;
 	}
 
 	public Seat() {
@@ -73,10 +77,16 @@ public class Seat implements Serializable {
 		this.seat_type = seat_type;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
 
 }
