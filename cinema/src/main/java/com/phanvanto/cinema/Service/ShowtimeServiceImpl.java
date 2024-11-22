@@ -1,5 +1,6 @@
 package com.phanvanto.cinema.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
 	public Showtime getShowTimebyShowtime_Id(Long id) {
 		return showtimeRespository.getShowTimebyShowtime_Id(id);
 	}
-
-	@Override
-	public List<Showtime> getListShowtimebyCinema_idAndMovieId(Long cinema_id, Long movie_id) {
-		return showtimeRespository.getListShowtimebyCinema_idAndMovieId(cinema_id, movie_id);
-	}
-
+	
 	@Override
 	public void AddorUpdate(Showtime showtime) {
 		showtimeRespository.AddorUpdate(showtime);
@@ -35,6 +31,12 @@ public class ShowtimeServiceImpl implements ShowtimeService {
 	@Override
 	public void DeleteById(Long showtime_id) {
 		showtimeRespository.DeleteById(showtime_id);
+	}
+
+	@Override
+	public List<Showtime> getListShowtimebyCinema_idAndMovieId(Long cinema_id, Long movie_id, Date day_book) {
+	
+		return showtimeRespository.getListShowtimebyCinema_idAndMovieId(cinema_id, movie_id, day_book);
 	}
 
 }

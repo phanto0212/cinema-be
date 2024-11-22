@@ -212,6 +212,7 @@
 	                <th scope="col">Screen_id</th>
 	                <th scope="col">Movie_id</th>
 					<th scope="col">Time_show</th>
+					<th scope="col">Day_show</th>
 	                <th scope="col">Action</th>
 	            </tr>
 	        </thead>
@@ -222,6 +223,7 @@
 	                <td th:text="${showtime.screen_id}" class="small-column"></td>
 	                <td th:text="${showtime.movie_id}" class="medium-column"></td>
 	                <td th:text="${showtime.time_show}" class="medium-column"></td>
+					<td th:text="${showtime.day_show}" class="medium-column"></td>
 	                <td class="row-btn-action">
 	                    <form action="#" th:action="@{/edit/showtime/{id}(id=${showtime.id})}" method="post">
 	                        <button type="submit" style="background-color: blue;" class="btn-size btn btn-secondary btn-sm">Edit</button>
@@ -282,6 +284,11 @@
 			            <label for="time_show">Showtime</label>
 			            <input type="text" class="form-control" id="time_show" name="time_show" required>
 			          </div>
+					  <div class="form-group mb-3">
+					    <label for="day_show">Day Time</label>
+					    <input type="Date" class="form-control" id="day_show" name="day_show" required>
+					  </div>
+					  
 
 			          <!-- Footer của modal -->
 			          <div class="modal-footer">

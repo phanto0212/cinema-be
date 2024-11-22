@@ -1,11 +1,14 @@
 package com.phanvanto.cinema.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 import com.phanvanto.cinema.Entity.Ratings;
 
-public interface RatingRespository extends JpaRepository<Ratings, Integer>{
-
+public interface RatingRespository {
+	List<Ratings > getAllratingByMovieId(Long movie_id);
+	void deleteRatingById (Integer id);
+	void AddorUpdate(Ratings rating);
 }
 
 

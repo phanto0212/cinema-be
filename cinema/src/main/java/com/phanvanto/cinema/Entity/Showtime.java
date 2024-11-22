@@ -1,6 +1,7 @@
 package com.phanvanto.cinema.Entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalTime;
 
 import jakarta.persistence.Column;
@@ -30,14 +31,18 @@ public class Showtime implements Serializable {
 	
 	@Column(name = "time_show")
 	private LocalTime time_show;
+	
+	@Column(name = "day_show")
+	private Date day_show;
 
-	public Showtime(Long id, Long cinema_id, Long screen_id, Long movie_id, LocalTime time_show) {
+	public Showtime(Long id, Long cinema_id, Long screen_id, Long movie_id, LocalTime time_show, Date day_show) {
 		super();
 		this.id = id;
 		this.cinema_id = cinema_id;
 		this.screen_id = screen_id;
 		this.movie_id = movie_id;
 		this.time_show = time_show;
+		this.day_show = day_show;
 	}
 
 	public Showtime() {
@@ -85,9 +90,16 @@ public class Showtime implements Serializable {
 		this.time_show = time_show;
 	}
 
+	public Date getDay_show() {
+		return day_show;
+	}
+
+	public void setDay_show(Date day_show) {
+		this.day_show = day_show;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	
 }

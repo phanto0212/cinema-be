@@ -56,11 +56,13 @@ public class SeatRespositoryImpl implements SeatRespository{
 	        LEFT JOIN Ticket ticket ON lineTicket.ticket_id = ticket.ticket_id
 	        WHERE seat.screen_id = 
             (SELECT s.screen_id FROM Showtime s WHERE s.id = :showtimeId)
+           AND (ticket.status = :paid OR lineTicket.id IS NULL)
         AND EXISTS 
             (SELECT 1 FROM Ticket t WHERE t.showtime_id = :showtimeId AND t.screen_id = seat.screen_id)
 	    """;
 
 	    Query query = entityManager.createQuery(hql);
+	    query.setParameter("paid", "paid");
 	    query.setParameter("showtimeId", showtimeId);
 
 	    List<Object[]> resultList = query.getResultList();
