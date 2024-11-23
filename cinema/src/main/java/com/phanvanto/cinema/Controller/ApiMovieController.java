@@ -29,6 +29,14 @@ public class ApiMovieController {
 		return ResponseEntity.ok(reponse);
 		
 	}
+	@GetMapping("/all/show/now")
+	public ResponseEntity<?> getAllMovieShowNow(){
+		List<Movie> movies = movieService.getAllMovieShowNow();
+		Map<String, Object> reponse = new HashMap();
+		reponse.put("movies", movies);
+		return ResponseEntity.ok(reponse);
+		
+	}
 	@GetMapping("/get/movie/{id}")
 	public ResponseEntity<?> getMovieById(@PathVariable("id") Long id){
 		try {

@@ -70,4 +70,16 @@ public class MovieRespositoryImpl implements MovieRespository {
 	}
 	}
 
+	@Override
+	public List<Movie> getAllMovieShowNow() {
+		String hql = "FROM Movie m WHERE m.release_date <= CURRENT_DATE ";
+		return entityManager.createQuery(hql, Movie.class).getResultList();
+	}
+
+	@Override
+	public List<Movie> getAllMovieComingSoon() {
+		String hql = "FROM Movie m WHERE m.release_date > CURRENT_DATE ";
+		return entityManager.createQuery(hql, Movie.class).getResultList();
+	}
+
 }

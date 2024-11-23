@@ -34,4 +34,15 @@ public class MovieServiceImpl implements MovieService {
 		return movieRespository.getMovieById(id);
 	}
 
+	@Override
+	public List<Movie> getAllMovieShowNow() {
+		
+		return movieRespository.getAllMovieShowNow();
+	}
+
+	@Override
+	public List<Movie> getAllMovieComingSoon() {
+		return movieRespository.getAllMovieComingSoon();
+	}
+
 }

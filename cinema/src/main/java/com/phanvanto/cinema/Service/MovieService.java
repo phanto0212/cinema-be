@@ -10,4 +10,6 @@ public interface MovieService {
 	void AddorUpdate(Movie movie);
 	int deleteMovie(Long id);
 	Movie getMovieById(Long id);
+	List<Movie> getAllMovieShowNow();
+	List<Movie> getAllMovieComingSoon();
 }

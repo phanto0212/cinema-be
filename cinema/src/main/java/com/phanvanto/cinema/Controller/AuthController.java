@@ -22,12 +22,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phanvanto.cinema.Configs.JwtTokenUtil;
+import com.phanvanto.cinema.Entity.Role;
 import com.phanvanto.cinema.Entity.User;
+import com.phanvanto.cinema.Entity.User_Role;
 import com.phanvanto.cinema.Request.LoginRequest;
+import com.phanvanto.cinema.Request.RegisterRequest;
 import com.phanvanto.cinema.Service.RoleService;
 import com.phanvanto.cinema.Service.UserRoleService;
 import com.phanvanto.cinema.Service.UserService;
 import com.phanvanto.cinema.Util.JwtResponse;
+
 
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
@@ -125,6 +129,40 @@ public class AuthController {
     	catch(Exception e) {
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("get user error");
     	}
+    }
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
+        // Kiểm tra xem username hoặc email đã tồn tại hay chưa
+        if (userService.getUserByUsername(registerRequest.getEmail()) != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email đã tồn tại!");
+        }
+
+        if (userService.getUserByEmail(registerRequest.getEmail()) != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("email đã được đăng kí!");
+        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    	String rawPassword = registerRequest.getPassword();
+    	String encodedPassword = encoder.encode(rawPassword);
+        // Tạo người dùng mới
+        User user = new User();
+        user.setUsername(registerRequest.getEmail());
+        user.setPassword(encodedPassword); // Nhớ mã hóa mật khẩu trước khi lưu
+        user.setEmail(registerRequest.getEmail());
+        user.setEnabled(true);
+        user.setFullName("nguyen van A");
+        user.setTelephone("19001013");
+        userService.AddOrUpdate(user);
+        
+        Role role = roleService.findByRoleName("User");
+        if (role == null) {
+            throw new RuntimeException("Role 'User' not found");
+        }
+   	
+    	User_Role userRole = new User_Role();
+        userRole.setUser(user);
+        userRole.setRole(role);
+        userRoleService.save(userRole);
+        return ResponseEntity.ok("register successful");
     }
 
 }
