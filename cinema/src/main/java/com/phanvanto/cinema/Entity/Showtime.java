@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +32,7 @@ public class Showtime implements Serializable {
 	private Long movie_id;
 	
 	@Column(name = "time_show")
+	@JsonFormat(pattern = "HH:mm")
 	private LocalTime time_show;
 	
 	@Column(name = "day_show")

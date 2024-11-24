@@ -8,7 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +22,7 @@ public class ApiShowtimeController {
 	@Autowired 
 	private ShowtimeService showtimeService;
 	
-	@GetMapping("/get/all/showtime")
+	@PostMapping("/get/all/showtime")
 	public ResponseEntity<?> getAllShowtime(@RequestBody Map<String, String> params ){
 		try {
 			String CinemaIdStr = params.get("cinema_id");

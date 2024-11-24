@@ -91,15 +91,15 @@ public class CinemaRespositoryImpl implements CinemaRespository {
 
 	@Override
 	public List<CinemaDTO> getCinemasByMovieAndCity(Long movieId, Date dayShow, String city) {
-	    String queryStr = "SELECT s.cinema_id, c.name AS cinema_name, c.address , s.movie_id, s.time_show, s.day_show " +
+	    String queryStr = "SELECT DISTINCT s.cinema_id, c.name AS cinema_name, c.address, s.movie_id, MIN(s.time_show), s.day_show " +
 	                      "FROM Showtime s JOIN Cinema c ON s.cinema_id = c.id " +
 	                      "WHERE s.movie_id = :movie_id " +
 	                      "AND s.day_show = :day_show " +
-	                      "AND c.city = :city";
+	                      "AND c.city = :city " +
+	                      "GROUP BY s.cinema_id, c.name, c.address, s.movie_id, s.day_show";
 
-	    // Sử dụng TypedQuery với DTO
 	    TypedQuery<Object[]> query = entityManager.createQuery(queryStr, Object[].class);
-	    
+
 	    query.setParameter("movie_id", movieId);
 	    query.setParameter("day_show", dayShow);
 	    query.setParameter("city", city);
@@ -114,13 +114,14 @@ public class CinemaRespositoryImpl implements CinemaRespository {
 	        dto.setCinemaName((String) result[1]);
 	        dto.setAddress((String) result[2]);
 	        dto.setMovieId((Long) result[3]);
-	        dto.setTimeShow((LocalTime) result[4]);
+	        dto.setTimeShow((LocalTime) result[4]); // MIN(time_show)
 	        dto.setDayShow((Date) result[5]);
 	        cinemaDTOs.add(dto);
 	    }
 
 	    return cinemaDTOs;
 	}
+
 
 	
 

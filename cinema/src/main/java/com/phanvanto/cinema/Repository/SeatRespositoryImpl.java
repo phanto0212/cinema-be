@@ -66,7 +66,22 @@ public class SeatRespositoryImpl implements SeatRespository{
 	    query.setParameter("showtimeId", showtimeId);
 
 	    List<Object[]> resultList = query.getResultList();
-
+	    if (resultList.isEmpty()) {
+	        String fallbackHql = """
+	            SELECT 
+	                seat.id AS seat_id,
+	                seat.screen_id,
+	                seat.seat_number,
+	                seat.seat_type,
+	                'available' AS status
+	            FROM Seat seat
+	            WHERE seat.screen_id = 
+	                (SELECT s.screen_id FROM Showtime s WHERE s.id = :showtimeId)
+	        """;
+	        query = entityManager.createQuery(fallbackHql);
+	        query.setParameter("showtimeId", showtimeId);
+	        resultList = query.getResultList();
+	    }
 	    List<SeatDTO> seatDTOList = new ArrayList<>();
 	    for (Object[] row : resultList) {
 	        // Kiểm tra kiểu dữ liệu của mỗi phần tử trước khi ép kiểu

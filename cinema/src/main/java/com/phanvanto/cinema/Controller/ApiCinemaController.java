@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class ApiCinemaController {
 	@Autowired
 	private ShowtimeService showtimeService;
 	
-	@GetMapping("/get/all/city")
+	@PostMapping("/get/all/city")
 	public ResponseEntity<?> getAllByCity(@RequestBody Map<String, String> params) throws Exception{
 		try {
 			String movie_id_STR = params.get("movie_id");
@@ -52,9 +53,7 @@ public class ApiCinemaController {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("City rỗng!!");
 			}
 			List<CinemaDTO> cinemas = cinemaService.getCinemasByMovieAndCity(movie_id, dayBook, CityName);
-			if(cinemas.size() == 0) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Không có Cinema nào ở thành phố "+ CityName);
-			}
+
 //			List<Showtime> showtimes = showtimeService
 			Map<String, Object> reponse = new HashMap<>();
 			reponse.put("cinemas", cinemas);
