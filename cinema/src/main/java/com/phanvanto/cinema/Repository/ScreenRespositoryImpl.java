@@ -8,6 +8,7 @@ import com.phanvanto.cinema.Entity.Screen;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 @Repository
@@ -61,6 +62,14 @@ public class ScreenRespositoryImpl implements ScreenRespository{
 			throw e;
 		}
 		
+	}
+
+	@Override
+	public List<Screen> getListByCinemaId(Long id) {
+		String hql = "From Screen s Where s.cinema_id = :id";
+		TypedQuery<Screen> query = entityManager.createQuery(hql, Screen.class);
+		query.setParameter("id", id);
+		return query.getResultList();
 	}
 
 }

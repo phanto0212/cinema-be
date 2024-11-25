@@ -35,4 +35,9 @@ public class ScreenServiceImpl implements ScreenService {
 		
 	}
 
+	@Override
+	public List<Screen> getListByCinemaId(Long id) {
+		return screenRespository.getListByCinemaId(id);
+	}
+
 }

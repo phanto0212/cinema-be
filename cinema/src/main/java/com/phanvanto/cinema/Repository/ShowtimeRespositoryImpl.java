@@ -60,7 +60,7 @@ public class ShowtimeRespositoryImpl implements ShowtimeRespository{
 
 	@Override
 	public List<Showtime> getListShowtimebyCinema_idAndMovieId(Long cinema_id, Long movie_id,Date day_book) {
-		String hql = "From Showtime s where s.cinema_id =: cinema_id and s.movie_id =: movie_id and s.day_show =: day_book ";
+		String hql = "From Showtime s where s.cinema_id =: cinema_id and s.movie_id =: movie_id and s.day_show =: day_book ORDER BY s.time_show ASC ";
 		TypedQuery<Showtime> query = entityManager.createQuery(hql, Showtime.class);
 		query.setParameter("cinema_id", cinema_id);
 		query.setParameter("movie_id", movie_id);

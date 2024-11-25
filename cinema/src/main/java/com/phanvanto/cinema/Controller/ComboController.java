@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.phanvanto.cinema.Entity.Combo;
@@ -28,5 +29,17 @@ public class ComboController {
 	public String addorUpdate(@ModelAttribute Combo combo) {
 		comboService.AddorUpdate(combo);
 		return ("redirect:/combo");
+	}
+	@PostMapping("/delete/combo/{id}")
+	public String deleteCombo(@PathVariable("id") Long id) {
+		try {
+			comboService.deleteComboById(id);
+			return("redirect:/combo");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+			
+		}
 	}
 }

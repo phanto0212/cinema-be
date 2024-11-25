@@ -10,6 +10,6 @@ public interface ScreenRespository {
 	void AddorUpdate(Screen screen);
 	Screen getScreenById(Long id);
 	void deleteById(Long id);
-	
+	List<Screen> getListByCinemaId(Long id);
 	
 }
