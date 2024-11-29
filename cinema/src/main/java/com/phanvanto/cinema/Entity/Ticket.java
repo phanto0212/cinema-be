@@ -23,6 +23,9 @@ public class Ticket implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ticket_id;
     
+    @Column(name="user_id")
+    private Long user_id;
+    
     @Column(name = "showtime_id")
     private Long showtime_id;
     
@@ -50,10 +53,11 @@ public class Ticket implements Serializable {
     @Column(name = "status")
     private String status;
 
-	public Ticket(Integer ticket_id, Long showtime_id, Long movie_id, int screen_id, BigDecimal price,
+	public Ticket(Integer ticket_id, Long user_id, Long showtime_id, Long movie_id, int screen_id, BigDecimal price,
 			Timestamp purchase_time, Timestamp start_time, Timestamp end_time, String status) {
 		super();
 		this.ticket_id = ticket_id;
+		this.user_id = user_id;
 		this.showtime_id = showtime_id;
 		this.movie_id = movie_id;
 		this.screen_id = screen_id;
@@ -75,6 +79,14 @@ public class Ticket implements Serializable {
 
 	public void setTicket_id(Integer ticket_id) {
 		this.ticket_id = ticket_id;
+	}
+
+	public Long getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
 	}
 
 	public Long getShowtime_id() {

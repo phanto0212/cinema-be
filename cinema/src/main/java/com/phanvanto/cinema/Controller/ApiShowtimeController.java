@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phanvanto.cinema.Entity.Showtime;
+import com.phanvanto.cinema.Service.ScreenService;
 import com.phanvanto.cinema.Service.ShowtimeService;
 
 @RestController
@@ -21,6 +22,8 @@ import com.phanvanto.cinema.Service.ShowtimeService;
 public class ApiShowtimeController {
 	@Autowired 
 	private ShowtimeService showtimeService;
+	@Autowired
+	private ScreenService screenService;
 	
 	@PostMapping("/get/all/showtime")
 	public ResponseEntity<?> getAllShowtime(@RequestBody Map<String, String> params ){
@@ -28,9 +31,11 @@ public class ApiShowtimeController {
 			String CinemaIdStr = params.get("cinema_id");
 			String MovieIdStr = params.get("movie_id");
 			String dayShowStr = params.get("day_show");
-			if(CinemaIdStr.isEmpty()|| MovieIdStr.isEmpty() || dayShowStr.isEmpty()) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("thieu tham so nhe thg ngu");
-			}
+			if (CinemaIdStr == null || CinemaIdStr.isEmpty() || 
+		            MovieIdStr == null || MovieIdStr.isEmpty() || 
+		            dayShowStr == null || dayShowStr.isEmpty()) {
+		            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Thiếu tham số cần thiết.");
+		        }
 			 // Chuyển đổi cinema_id và movie_id từ String sang Long
 	        Long cinemaId = Long.parseLong(CinemaIdStr);
 	        Long movieId = Long.parseLong(MovieIdStr);
@@ -38,6 +43,7 @@ public class ApiShowtimeController {
 	        // Chuyển đổi day_show từ String sang java.sql.Date
 	        Date dayShow = Date.valueOf(dayShowStr); // Định dạng phải là "yyyy-MM-dd"
 	        List <Showtime> showtimes = showtimeService.getListShowtimebyCinema_idAndMovieId(cinemaId, movieId, dayShow);
+	        
 	        Map<String, Object> reponse =  new HashMap<>();
 	        reponse.put("showtimes", showtimes);
 	        return ResponseEntity.ok(reponse);
