@@ -20,10 +20,10 @@ public class LineCombo implements Serializable {
 	private Long id;
 	
 	@Column(name = "ticket_id")
-	private Long ticket_id;
+	private Integer ticket_id;
 	
-	@Column(name = "movie_id")
-	private Long movie_id;
+	@Column(name = "combo_id")
+	private Long combo_id;
 	
 	@Column(name = "quantity")
 	private int quantity;
@@ -31,11 +31,11 @@ public class LineCombo implements Serializable {
 	@Column(name = "total_price", nullable = false, precision = 10, scale = 2)
 	private BigDecimal total_price;
 
-	public LineCombo(Long id, Long ticket_id, Long movie_id, int quantity, BigDecimal total_price) {
+	public LineCombo(Long id, Integer ticket_id, Long combo_id, int quantity, BigDecimal total_price) {
 		super();
 		this.id = id;
 		this.ticket_id = ticket_id;
-		this.movie_id = movie_id;
+		this.combo_id = combo_id;
 		this.quantity = quantity;
 		this.total_price = total_price;
 	}
@@ -53,20 +53,20 @@ public class LineCombo implements Serializable {
 		this.id = id;
 	}
 
-	public Long getTicket_id() {
+	public Integer getTicket_id() {
 		return ticket_id;
 	}
 
-	public void setTicket_id(Long ticket_id) {
+	public void setTicket_id(Integer ticket_id) {
 		this.ticket_id = ticket_id;
 	}
 
-	public Long getMovie_id() {
-		return movie_id;
+	public Long getCombo_id() {
+		return combo_id;
 	}
 
-	public void setMovie_id(Long movie_id) {
-		this.movie_id = movie_id;
+	public void setCombo_id(Long combo_id) {
+		this.combo_id = combo_id;
 	}
 
 	public int getQuantity() {
@@ -88,9 +88,6 @@ public class LineCombo implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
-	
-	
 
+	
 }

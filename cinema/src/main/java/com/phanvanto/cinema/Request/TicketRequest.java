@@ -2,6 +2,8 @@ package com.phanvanto.cinema.Request;
 
 import java.util.List;
 
+import com.phanvanto.cinema.DTO.ComboDTO;
+
 public class TicketRequest {
     private Long movieId;
     private Long showtimeId;
@@ -9,9 +11,9 @@ public class TicketRequest {
     private int countAdult;
     private int countChild;
     private List<Integer> seatIds;
-    private List<Long> comboIds;
+    private List<ComboDTO> comboIds;
 	public TicketRequest(Long movieId, Long showtimeId, int screenId, int countAdult, int countChild,
-			List<Integer> seatIds, List<Long> comboIds) {
+			List<Integer> seatIds, List<ComboDTO> comboIds) {
 		super();
 		this.movieId = movieId;
 		this.showtimeId = showtimeId;
@@ -61,11 +63,12 @@ public class TicketRequest {
 	public void setSeatIds(List<Integer> seatIds) {
 		this.seatIds = seatIds;
 	}
-	public List<Long> getComboIds() {
+	public List<ComboDTO> getComboIds() {
 		return comboIds;
 	}
-	public void setComboIds(List<Long> comboIds) {
+	public void setComboIds(List<ComboDTO> comboIds) {
 		this.comboIds = comboIds;
 	}
+	
 	
 }

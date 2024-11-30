@@ -1,10 +1,9 @@
 package com.phanvanto.cinema.Repository;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
 import com.phanvanto.cinema.Entity.LineCombo;
-
-
-public interface LineComboRespository extends JpaRepository<LineCombo, Long>{
-
+public interface LineComboRespository{
+   
+	void AddorUpdate(LineCombo line_combo);
+	List<LineCombo> getListByticketId(Long id);
 }

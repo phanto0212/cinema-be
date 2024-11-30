@@ -35,4 +35,10 @@ public class LineTicketServiceImpl implements LineTicketService {
 		return lineTicketRespository.getLineTicketByLine_id(id);
 	}
 
+	@Override
+	public List<Line_Ticket> getListByTicketId(Long id) {
+		// TODO Auto-generated method stub
+		return lineTicketRespository.getListByTicketId(id);
+	}
+
 }

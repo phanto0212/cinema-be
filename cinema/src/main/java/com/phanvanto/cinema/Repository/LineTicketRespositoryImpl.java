@@ -8,6 +8,7 @@ import com.phanvanto.cinema.Entity.Line_Ticket;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 @Repository
 @Transactional
@@ -56,6 +57,14 @@ public class LineTicketRespositoryImpl implements LineTicketRespository {
 	public Line_Ticket getLineTicketByLine_id(Long id) {
 		// TODO Auto-generated method stub
 		return entityManager.find(Line_Ticket.class, id);
+	}
+
+	@Override
+	public List<Line_Ticket> getListByTicketId(Long id) {
+		String hql = "From Line_Ticket l Where l.ticket_id = :id";
+		TypedQuery<Line_Ticket> query = entityManager.createQuery(hql, Line_Ticket.class);
+		query.setParameter("id", id);
+		return query.getResultList();
 	}
 
 }
