@@ -9,6 +9,7 @@ public interface SeatRespository {
 
 	List<Seat> getList();
 	List<SeatDTO> getAllSeatByShowtimeId(Long showtime_id);
+	List<Seat> getListByScreenId(Integer id);
 	void AddorUpdate(Seat seat);
     void deleteSeatById(Long id);
 }

@@ -1,12 +1,14 @@
 package com.phanvanto.cinema.DTO;
 
+import java.math.BigDecimal;
+
 public class ComboDTO {
 
 	private Long combo_id;
 	private String name;
 	private int quantity;
-	private int price;
-	public ComboDTO(Long combo_id, String name, int quantity, int price) {
+	private BigDecimal price;
+	public ComboDTO(Long combo_id, String name, int quantity, BigDecimal price) {
 		super();
 		this.combo_id = combo_id;
 		this.name = name;
@@ -35,10 +37,10 @@ public class ComboDTO {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public int getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 	

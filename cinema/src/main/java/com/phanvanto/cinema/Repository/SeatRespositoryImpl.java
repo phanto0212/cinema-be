@@ -41,28 +41,29 @@ public class SeatRespositoryImpl implements SeatRespository{
 
 	@Override
 	public List<SeatDTO> getAllSeatByShowtimeId(Long showtimeId) {
-	    String hql = """
-	        SELECT 
-	            seat.id AS seat_id,
-	            seat.screen_id,
-	            seat.seat_number,
-	            seat.seat_type,
-	            CASE 
-	                WHEN lineTicket.id IS NOT NULL THEN 'booked'
-	                ELSE 'available'
-	            END AS status
-	        FROM Seat seat
-	        LEFT JOIN Line_Ticket lineTicket ON seat.id = lineTicket.seat_id
-	        LEFT JOIN Ticket ticket ON lineTicket.ticket_id = ticket.ticket_id
-	        WHERE seat.screen_id = 
-            (SELECT s.screen_id FROM Showtime s WHERE s.id = :showtimeId)
-           AND (ticket.status = :paid OR lineTicket.id IS NULL)
-        AND EXISTS 
-            (SELECT 1 FROM Ticket t WHERE t.showtime_id = :showtimeId AND t.screen_id = seat.screen_id)
-	    """;
+		String hql = """
+			    SELECT DISTINCT 
+			        seat.id AS seat_id,
+	                seat.screen_id,
+	                seat.seat_number,
+	                seat.seat_type,
+			        CASE 
+			            WHEN MAX(ticket.status) = 'paid' THEN 'booked'
+			            WHEN MAX(ticket.status) = 'confirmed' THEN 'available'
+			            ELSE 'available'
+			        END AS status
+			    FROM Seat seat
+			    LEFT JOIN Line_Ticket lineTicket ON seat.id = lineTicket.seat_id
+			    LEFT JOIN Ticket ticket ON lineTicket.ticket_id = ticket.ticket_id
+			        AND ticket.showtime_id = :showtimeId
+			    WHERE seat.screen_id = 
+			        (SELECT s.screen_id FROM Showtime s WHERE s.id = :showtimeId)
+			    GROUP BY 
+			        seat.id, seat.screen_id, seat.seat_number, seat.seat_type
+			"""
+;
 
 	    Query query = entityManager.createQuery(hql);
-	    query.setParameter("paid", "paid");
 	    query.setParameter("showtimeId", showtimeId);
 
 	    List<Object[]> resultList = query.getResultList();
@@ -97,4 +98,13 @@ public class SeatRespositoryImpl implements SeatRespository{
 	    return seatDTOList;
 	}
 
+	@Override
+	public List<Seat> getListByScreenId(Integer id) {
+		String hql = "From Seat s Where s.screen_id = : id";
+		TypedQuery<Seat> query = entityManager.createQuery(hql, Seat.class);
+		query.setParameter("id", id);
+		return query.getResultList();
+	}
+
 }
+

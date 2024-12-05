@@ -2,6 +2,7 @@ package com.phanvanto.cinema.Controller;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ import com.phanvanto.cinema.Entity.LineCombo;
 import com.phanvanto.cinema.Entity.Line_Ticket;
 import com.phanvanto.cinema.Entity.Movie;
 import com.phanvanto.cinema.Entity.Screen;
+import com.phanvanto.cinema.Entity.Seat;
 import com.phanvanto.cinema.Entity.Showtime;
 import com.phanvanto.cinema.Entity.Ticket;
 import com.phanvanto.cinema.Entity.User;
@@ -33,6 +35,7 @@ import com.phanvanto.cinema.Service.LineComboService;
 import com.phanvanto.cinema.Service.LineTicketService;
 import com.phanvanto.cinema.Service.MovieService;
 import com.phanvanto.cinema.Service.ScreenService;
+import com.phanvanto.cinema.Service.SeatService;
 import com.phanvanto.cinema.Service.ShowtimeService;
 import com.phanvanto.cinema.Service.TicketService;
 import com.phanvanto.cinema.Service.UserService;
@@ -74,6 +77,9 @@ public class ApiTicketController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
+	@Autowired
+	private SeatService seatService;
+	
 	@PostMapping("/order/ticket")
 	public ResponseEntity<?> orderticket(HttpServletRequest request,@RequestBody TicketRequest params){
 		try {
@@ -109,7 +115,7 @@ public class ApiTicketController {
 		        BigDecimal countChild = BigDecimal.valueOf(params.getCountChild());
 
 		        // Tính tổng giá
-		        BigDecimal totalPrice = countAdult.multiply(adultPrice).add(countChild.multiply(childPrice));
+		        BigDecimal totalPrice = params.getTotalPrice();
 		        Ticket ticket = new Ticket();
 		        ticket.setUser_id(user.getId());
 		        ticket.setStatus("confimed");
@@ -117,7 +123,7 @@ public class ApiTicketController {
 		        ticket.setMovie_id(params.getMovieId());
 		        ticket.setScreen_id(params.getScreenId());
 		        ticket.setShowtime_id(params.getShowtimeId());
-		        ticket.setPurchase_time(new Timestamp(System.currentTimeMillis()));
+		        
 		        ticketService.AddorUpdate(ticket);
 		        for(Integer id : params.getSeatIds()) {
 		        	Line_Ticket line_ticket = new Line_Ticket();
@@ -159,15 +165,42 @@ public class ApiTicketController {
 			Movie movie = movieService.getMovieById(showtime.getMovie_id());
 			Screen screen = screenService.getScreenById(showtime.getScreen_id());
 			List<Line_Ticket> line_tickets = lineTicketService.getListByTicketId(id);
+			List<Seat> seats = seatService.getListByScreenId(screen.getId());
+			List<Combo> combos = comboService.getList();
+			List<String> listNameSeat = new ArrayList<>();
+			for (Line_Ticket line_ticket : line_tickets) {
+			    for (Seat seat : seats) {
+			        
+			        if (line_ticket.getSeat_id().longValue() == seat.getId().longValue()) {			        
+			            listNameSeat.add(seat.getSeat_number());
+			        }
+			    }
+			}
+			List<ComboDTO> combo_ticket =  new ArrayList<>();
 			List<LineCombo> line_combos = lineComboService.getListByticketId(id);
+			for(LineCombo line_combo : line_combos) {
+				for(Combo combo : combos) {
+					if(combo.getId() == line_combo.getCombo_id())
+					{
+						ComboDTO comboDTO = new ComboDTO();
+						comboDTO.setCombo_id(combo.getId());
+						comboDTO.setName(combo.getName());
+						comboDTO.setQuantity(line_combo.getQuantity());
+						comboDTO.setPrice(combo.getPrice());
+						combo_ticket.add(comboDTO);
+						
+					}
+				}
+			}
 			Cinema cinema = cinemaService.getCinemaById(showtime.getCinema_id());
 			Map<String, Object> reponse = new HashMap<>();
 			reponse.put("cinema", cinema);
 			reponse.put("showtime", showtime);
 			reponse.put("movie", movie);
-			reponse.put("line_tickets", line_tickets);
+			reponse.put("line_tickets", listNameSeat);
 			reponse.put("screen", screen);
-			reponse.put("line_combos", line_combos);
+			reponse.put("line_combos", combo_ticket);
+			reponse.put("ticket", ticket);
 			return ResponseEntity.ok(reponse);
 		}
 		catch(Exception e) {

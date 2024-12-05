@@ -1,5 +1,6 @@
 package com.phanvanto.cinema.Request;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.phanvanto.cinema.DTO.ComboDTO;
@@ -10,8 +11,15 @@ public class TicketRequest {
     private int screenId;
     private int countAdult;
     private int countChild;
+    private BigDecimal totalPrice;
     private List<Integer> seatIds;
-    private List<ComboDTO> comboIds;
+    public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	private List<ComboDTO> comboIds;
 	public TicketRequest(Long movieId, Long showtimeId, int screenId, int countAdult, int countChild,
 			List<Integer> seatIds, List<ComboDTO> comboIds) {
 		super();

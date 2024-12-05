@@ -11,4 +11,5 @@ public interface SeatService {
 	List<SeatDTO> getAllSeatByShowtimeId(Long showtime_id);
 	void AddorUpdate(Seat seat);
 	void deleteSeatById(Long id);
+	List<Seat> getListByScreenId(Integer id);
 }

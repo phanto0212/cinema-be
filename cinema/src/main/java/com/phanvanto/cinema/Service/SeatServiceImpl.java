@@ -36,4 +36,9 @@ public class SeatServiceImpl implements SeatService{
 		return seatRespository.getAllSeatByShowtimeId(showtime_id);
 	}
 
+	@Override
+	public List<Seat> getListByScreenId(Integer id) {
+		return seatRespository.getListByScreenId(id) ;
+	}
+
 }
