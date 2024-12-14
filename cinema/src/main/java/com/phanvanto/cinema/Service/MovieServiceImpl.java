@@ -45,4 +45,9 @@ public class MovieServiceImpl implements MovieService {
 		return movieRespository.getAllMovieComingSoon();
 	}
 
+	@Override
+	public List<Movie> getMovieByKey(String key) {
+		return movieRespository.getMovieByKey(key);
+	}
+
 }

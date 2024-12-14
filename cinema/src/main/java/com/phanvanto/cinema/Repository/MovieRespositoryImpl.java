@@ -9,6 +9,7 @@ import com.phanvanto.cinema.Entity.Movie;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 @Repository
 @Transactional
@@ -80,6 +81,24 @@ public class MovieRespositoryImpl implements MovieRespository {
 	public List<Movie> getAllMovieComingSoon() {
 		String hql = "FROM Movie m WHERE m.release_date > CURRENT_DATE ";
 		return entityManager.createQuery(hql, Movie.class).getResultList();
+	}
+
+	@Override
+	public List<Movie> getMovieByKey(String key) {
+		try {
+			String hql = "SELECT m FROM Movie m WHERE " +
+			           "LOWER(m.title) LIKE LOWER(CONCAT('%', :key, '%')) OR " +
+			           "LOWER(m.director) LIKE LOWER(CONCAT('%', :key, '%')) OR " +
+			           "LOWER(m.actors) LIKE LOWER(CONCAT('%', :key, '%'))";
+			TypedQuery<Movie> query = entityManager.createQuery(hql, Movie.class);
+			query.setParameter("key", key);
+			return query.getResultList();
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 }

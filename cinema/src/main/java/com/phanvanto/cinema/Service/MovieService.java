@@ -12,4 +12,5 @@ public interface MovieService {
 	Movie getMovieById(Long id);
 	List<Movie> getAllMovieShowNow();
 	List<Movie> getAllMovieComingSoon();
+	List<Movie> getMovieByKey(String key);
 }

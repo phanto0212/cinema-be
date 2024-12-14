@@ -12,9 +12,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws") // Endpoint WebSocket
-                .setAllowedOrigins("http://localhost:3000") // Cho phép frontend truy cập
-                .withSockJS(); // Sử dụng SockJS fallback
+		 registry.addEndpoint("/ws") // Kết nối WebSocket tại endpoint /ws
+         .setAllowedOriginPatterns("*") // Cho phép tất cả domain (hoặc giới hạn theo domain production)
+         .withSockJS(); // Hỗ trợ SockJS fallback
     }
 
     @Override

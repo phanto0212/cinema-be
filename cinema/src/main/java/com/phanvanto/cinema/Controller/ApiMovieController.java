@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,6 +54,24 @@ public class ApiMovieController {
 			e.printStackTrace();
 			throw e;
 		}
+	}
+	@PostMapping("/get/movie/by/key")
+	public ResponseEntity<?> getMovieByKey(@RequestBody Map<String, String> params){
+		try {
+			String key = params.get("key");
+			if(key.isEmpty()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("khong nhap thi tim con cac a");
+			}
+			List<Movie> movies = movieService.getMovieByKey(key);
+			Map<String, Object> reponse = new HashMap<>();
+			reponse.put("movies", movies);
+			return ResponseEntity.ok(reponse);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 	}
 	
 
