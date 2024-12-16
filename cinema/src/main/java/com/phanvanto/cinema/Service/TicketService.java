@@ -9,4 +9,5 @@ public interface TicketService {
 	void AddorUpdate(Ticket ticket);
 	void deleteById(Long id);
 	Ticket getTicketById(Long id);
+	List<Ticket> getAllTicketByUserId(Long id);
 }

@@ -19,7 +19,7 @@ public class RatingRespositoryImpl implements RatingRespository {
 	@Override
 	public List<Ratings> getAllratingByMovieId(Long movie_id) {
 		try {
-			String hql = "From Ratings r Where r.movie_id := movie_id";
+			String hql = "From Ratings r Where r.movie_id =: movie_id";
 			TypedQuery<Ratings> query = entityManager.createQuery(hql, Ratings.class);
 			query.setParameter("movie_id", movie_id);
 			return query.getResultList();

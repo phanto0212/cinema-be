@@ -65,7 +65,7 @@ public class PaymentController {
                     // Gửi thông báo qua WebSocket
                     messagingTemplate.convertAndSend(
                         "/topic/payment/" + ticketId, 
-                        "Payment successful for ticket " + ticketId
+                        "success"
                     );
                     
                     
@@ -82,7 +82,7 @@ public class PaymentController {
                     // Gửi thông báo thất bại qua WebSocket
                     messagingTemplate.convertAndSend(
                         "/topic/payment/" + ticketId, 
-                        "Payment failed for ticket " + ticketId
+                        "fail"
                     );
 
                     return new ResponseObject<>(HttpStatus.BAD_REQUEST, "Failed", null);

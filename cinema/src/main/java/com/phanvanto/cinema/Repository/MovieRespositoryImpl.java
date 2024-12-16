@@ -88,8 +88,7 @@ public class MovieRespositoryImpl implements MovieRespository {
 		try {
 			String hql = "SELECT m FROM Movie m WHERE " +
 			           "LOWER(m.title) LIKE LOWER(CONCAT('%', :key, '%')) OR " +
-			           "LOWER(m.director) LIKE LOWER(CONCAT('%', :key, '%')) OR " +
-			           "LOWER(m.actors) LIKE LOWER(CONCAT('%', :key, '%'))";
+			           "LOWER(m.director) LIKE LOWER(CONCAT('%', :key, '%')) " ;
 			TypedQuery<Movie> query = entityManager.createQuery(hql, Movie.class);
 			query.setParameter("key", key);
 			return query.getResultList();

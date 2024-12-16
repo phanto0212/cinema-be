@@ -35,4 +35,10 @@ public class TicketServiceImpl implements TicketService {
 		return ticketRespository.getTicketById(id);
 	}
 
+	@Override
+	public List<Ticket> getAllTicketByUserId(Long id) {
+		// TODO Auto-generated method stub
+		return ticketRespository.getAllTicketByUserId(id);
+	}
+
 }

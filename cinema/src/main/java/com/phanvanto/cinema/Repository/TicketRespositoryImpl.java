@@ -8,6 +8,7 @@ import com.phanvanto.cinema.Entity.Ticket;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 @Repository
@@ -49,6 +50,16 @@ public class TicketRespositoryImpl implements TicketRespository {
 	public Ticket getTicketById(Long id) {
 		
 		return entityManager.find(Ticket.class, id);
+	}
+
+	@Override
+	public List<Ticket> getAllTicketByUserId(Long id) {
+		String hql = "From Ticket t WHERE t.user_id =: id and t.status =: status";
+		TypedQuery<Ticket> query =  entityManager.createQuery(hql, Ticket.class);
+		query.setParameter("id", id);
+		query.setParameter("status", "paid");
+		
+		return query.getResultList();
 	}
 
 }

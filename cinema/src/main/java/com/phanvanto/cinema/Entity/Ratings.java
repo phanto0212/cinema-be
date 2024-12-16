@@ -41,9 +41,10 @@ public class Ratings implements Serializable {
     private Timestamp updated_at;
     
     @Column(name = "created_at")
-    private int created_at;
+    private Timestamp created_at;
 
-	public Ratings(Integer rating_id, User user, Long movie_id, int rating, Timestamp updated_at, int created_at) {
+	public Ratings(Integer rating_id, User user, Long movie_id, int rating, Timestamp updated_at,
+			Timestamp created_at) {
 		super();
 		this.rating_id = rating_id;
 		this.user = user;
@@ -98,11 +99,11 @@ public class Ratings implements Serializable {
 		this.updated_at = updated_at;
 	}
 
-	public int getCreated_at() {
+	public Timestamp getCreated_at() {
 		return created_at;
 	}
 
-	public void setCreated_at(int created_at) {
+	public void setCreated_at(Timestamp created_at) {
 		this.created_at = created_at;
 	}
 
@@ -110,5 +111,6 @@ public class Ratings implements Serializable {
 		return serialVersionUID;
 	}
 
+	
 	
 }

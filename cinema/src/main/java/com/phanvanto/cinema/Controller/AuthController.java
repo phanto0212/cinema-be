@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.phanvanto.cinema.Configs.JwtTokenUtil;
 import com.phanvanto.cinema.DTO.ChangeInfo;
+import com.phanvanto.cinema.DTO.ChangePasswordDTO;
 import com.phanvanto.cinema.Entity.Role;
 import com.phanvanto.cinema.Entity.User;
 import com.phanvanto.cinema.Entity.User_Role;
@@ -197,6 +198,47 @@ public class AuthController {
 		        user.setTelephone(changeinfo.getTelephone());
 		        userService.AddOrUpdate(user);
 		        return ResponseEntity.ok("oke");
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    		throw e;
+    	}
+    }
+    @PostMapping("/change/password")
+    public ResponseEntity<?> changePassword(HttpServletRequest request, @RequestBody ChangePasswordDTO changePasswordDTo){
+    	try {
+    		 String jwt = request.getHeader("Authorization");
+		        if (jwt == null || !jwt.startsWith("Bearer ")) {
+		            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or missing token");
+		        }
+
+		        jwt = jwt.substring(7);
+		        Claims claims = jwtTokenUtil.getClaimsFromToken(jwt);
+		        java.util.Date expiration = claims.getExpiration();
+		        if (expiration.before(new java.util.Date())) {
+		            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired");
+		        }
+
+		        String username = claims.getSubject();
+		        if (username == null) {
+		            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
+		        }
+
+		        // Kiểm tra User
+		        User user = userService.getUserByUsername(username);
+		        if (user == null) {
+		            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+		        }
+		        String password = user.getPassword();
+		        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		        if(encoder.matches(changePasswordDTo.getPassword(), password)) {
+		        	String encodedPassword = encoder.encode(changePasswordDTo.getNewPassword());
+		        	user.setPassword(encodedPassword);
+		        	userService.AddOrUpdate(user);
+		        	return ResponseEntity.ok("Thay đổi thành công!");
+		        }
+		        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khâủ của bạn không đúng");
+		       
     	}
     	catch(Exception e) {
     		e.printStackTrace();
