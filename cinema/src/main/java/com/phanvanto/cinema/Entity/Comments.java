@@ -36,12 +36,13 @@ public class Comments implements Serializable {
     private String comment_text;
     
     @Column(name = "created_at")
-    private int created_at;
+    private Timestamp created_at;
     
     @Column(name = "updated_at")
     private Timestamp updated_at;
 
-	public Comments(Integer id, User user, Long movie_id, String comment_text, int created_at, Timestamp updated_at) {
+	public Comments(Integer id, User user, Long movie_id, String comment_text, Timestamp created_at,
+			Timestamp updated_at) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -88,11 +89,11 @@ public class Comments implements Serializable {
 		this.comment_text = comment_text;
 	}
 
-	public int getCreated_at() {
+	public Timestamp getCreated_at() {
 		return created_at;
 	}
 
-	public void setCreated_at(int created_at) {
+	public void setCreated_at(Timestamp created_at) {
 		this.created_at = created_at;
 	}
 
