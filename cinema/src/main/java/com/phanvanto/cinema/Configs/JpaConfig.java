@@ -33,9 +33,9 @@ public class JpaConfig {
     @Bean
     public DataSource dataSource() {
         return DataSourceBuilder.create()
-                .url("jdbc:mysql://localhost:3306/cinema_managerment")
+                .url("jdbc:mysql://gondola.proxy.rlwy.net:49031/railway")
                 .username("root")
-                .password("123456")
+                .password("ZiRsjOMCAWGcTQWytoMIYbukKCmtUrcl")
                 .build();
     }
 }

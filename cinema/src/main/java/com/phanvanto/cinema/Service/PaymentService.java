@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
 public class PaymentService {
     private final VNPayConfig vnPayConfig;
 
