@@ -7,14 +7,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
+
 
 import com.phanvanto.cinema.Configs.VNPayConfig;
 import com.phanvanto.cinema.DTO.PaymentDTO;
 import com.phanvanto.cinema.Util.VNPayUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
+
 
 @Service
 public class PaymentService {
@@ -59,27 +59,21 @@ public class PaymentService {
 
         vnpParamsMap.put("vnp_IpAddr", VNPayUtil.getIpAddress(request));
 
-        try {
-        	String callbackUrl = UriComponentsBuilder
-        		    .fromHttpUrl("https://cinema-be-1.onrender.com/api/v1/payment/vn-pay-callback")
-        		    .queryParam("bookingId", bookingId.trim())
-        		    .queryParam("userId", userId.trim())
-        		    .toUriString();
-            System.out.println("Callback URL: " + callbackUrl);
+        String callbackUrl = "https://cinema-be-1.onrender.com/api/v1/payment/vn-pay-callback"
+                + "?bookingId=" + URLEncoder.encode(bookingId.trim(), StandardCharsets.UTF_8)
+                + "&userId=" + URLEncoder.encode(userId.trim(), StandardCharsets.UTF_8);
+        System.out.println("Callback URL: " + callbackUrl);
 
-            // Chỉ mã hóa giá trị của các tham số
-            vnpParamsMap.put("vnp_ReturnUrl", callbackUrl);
+        vnpParamsMap.put("vnp_ReturnUrl", callbackUrl);
 
-            String queryUrl = VNPayUtil.getPaymentURL(vnpParamsMap, true);
-            String hashData = VNPayUtil.getPaymentURL(vnpParamsMap, false);
-            String vnpSecureHash = VNPayUtil.hmacSHA512(vnPayConfig.getSecretKey(), hashData);
-            queryUrl += "&vnp_SecureHash=" + vnpSecureHash;
+        String queryUrl = VNPayUtil.getPaymentURL(vnpParamsMap, true);
+        String hashData = VNPayUtil.getPaymentURL(vnpParamsMap, false);
+        String vnpSecureHash = VNPayUtil.hmacSHA512(vnPayConfig.getSecretKey(), hashData);
+        queryUrl += "&vnp_SecureHash=" + vnpSecureHash;
 
-            String paymentUrl = vnPayConfig.getVnp_PayUrl() + "?" + queryUrl;
-            return new PaymentDTO.VNPayResponse("ok", "success", paymentUrl);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Encoding not supported", e);
-        }
+        String paymentUrl = vnPayConfig.getVnp_PayUrl() + "?" + queryUrl;
+        return new PaymentDTO.VNPayResponse("ok", "success", paymentUrl);
+
     }
 
     public boolean validateVNPayResponse(HttpServletRequest request) {
