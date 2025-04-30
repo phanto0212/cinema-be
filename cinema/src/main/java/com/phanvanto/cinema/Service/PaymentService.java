@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.phanvanto.cinema.Configs.VNPayConfig;
 import com.phanvanto.cinema.DTO.PaymentDTO;
@@ -59,9 +60,11 @@ public class PaymentService {
         vnpParamsMap.put("vnp_IpAddr", VNPayUtil.getIpAddress(request));
 
         try {
-            String callbackUrl = "https://cinema-be-1.onrender.com/api/v1/payment/vn-pay-callback"
-                    + "?bookingId=" + URLEncoder.encode(bookingId, StandardCharsets.US_ASCII.toString())
-                    + "&userId=" + URLEncoder.encode(userId, StandardCharsets.US_ASCII.toString());
+        	String callbackUrl = UriComponentsBuilder
+        		    .fromHttpUrl("https://cinema-be-1.onrender.com/api/v1/payment/vn-pay-callback")
+        		    .queryParam("bookingId", bookingId.trim())
+        		    .queryParam("userId", userId.trim())
+        		    .toUriString();
             System.out.println("Callback URL: " + callbackUrl);
 
             // Chỉ mã hóa giá trị của các tham số
